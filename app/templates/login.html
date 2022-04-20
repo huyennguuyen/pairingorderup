@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="post" action="{{ url_for('.login) }}">
+<form method="post" action="{{ url_for('.login') }}">
     {{ form.csrf_token}}
     <div>
         {{ form.employee_number.label}} {{ form.employee_number}}
