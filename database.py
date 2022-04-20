@@ -5,7 +5,7 @@ from app import app, db
 from app.models import Employee
 
 with app.app_context():
-    # db.drop_all()
+    db.drop_all()
     db.create_all()
 
     employee = Employee(name="Margot", employee_number=1234, password="password")
