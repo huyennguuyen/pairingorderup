@@ -55,7 +55,8 @@ class MenuItem(db.Model):
 
     menu = db.relationship("Menu", back_populates="items")
     type = db.relationship("MenuItemType", back_populates="items")
-#    orders = db.relationship("Order", back_populates="items", secondary=order_items)
+
+    orders = db.relationship("Order", secondary=order_items, back_populates="items" )
 
 class MenuItemType(db.Model):
     __tablename__ = "menu_item_types"
@@ -73,12 +74,15 @@ class Table(db.Model):
     number   = db.Column(db.Integer, nullable=False, unique=True)
     capacity = db.Column(db.Integer, nullable=False)
 
+    orders = db.relationship("Order", back_populates="orders", cascade="all, delete")
 
 class Order(db.Model):
+    __tablename__ = "orders"
 
     id          = db.Column(db.Integer, primary_key=True)
     table_id    = db.Column(db.Integer, db.ForeignKey("tables.id"), nullable=False)
     employee_id = db.Column(db.Integer, db.ForeignKey("employees.id"), nullable=False) 
     closed      = db.Column(db.Boolean, nullable=False)
 
+    table = db.relationship("Table", back_populates="orders", cascade="all, delete")
     items = db.relationship("MenuItem", back_populates="orders", secondary=order_items)
